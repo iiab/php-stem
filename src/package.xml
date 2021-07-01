@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.6.2" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+http://pear.php.net/dtd/tasks-1.0.xsd
+http://pear.php.net/dtd/package-2.0
+http://pear.php.net/dtd/package-2.0.xsd">
+ <name>stem</name>
+ <channel>pecl.php.net</channel>
+ <summary>a PHP extension that provides word stemming</summary>
+ <description>This stem extension for PHP provides stemming capability for a variety of languages using Dr. M.F. Porter&apos;s Snowball API, which can be found at: http://snowball.tartarus.org
+ </description>
+ <lead>
+  <name>Jay Smith</name>
+  <user>jay</user>
+  <email>jay@php.net</email>
+  <active>yes</active>
+ </lead>
+ <lead>
+  <name>Olivier Hill</name>
+  <user>ohill</user>
+  <email>ohill@php.net</email>
+  <active>yes</active>
+ </lead>
+ <date>2008-06-09</date>
+ <time>11:39:19</time>
+ <version>
+  <release>2.0.0-dev</release>
+  <api>2.0.0</api>
+ </version>
+ <stability>
+  <release>stable</release>
+  <api>stable</api>
+ </stability>
+ <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD</license>
+ <notes>* Reimported the new API from Snowball and synchronize all currently available stemmers.
+* Added Turkish (Unicode), Romanian and Hungarian stemmers
+* Using current param parsing in ZE (don't manipulate zvals directly)
+* Fix bug #12482
+ </notes>
+ <contents>
+  <dir name="/">
+   <dir name="tests">
+    <file name="001.phpt" role="test" />
+    <file name="002.phpt" role="test" />
+    <file name="003.phpt" role="test" />
+    <file name="004.phpt" role="test" />
+    <file name="005.phpt" role="test" />
+    <file name="006.phpt" role="test" />
+    <file name="007.phpt" role="test" />
+    <file name="008.phpt" role="test" />
+    <file name="009.phpt" role="test" />
+    <file name="010.phpt" role="test" />
+    <file name="011.phpt" role="test" />
+    <file name="013.phpt" role="test" />
+    <file name="014.phpt" role="test" />
+    <file name="015.phpt" role="test" />
+    <file name="016.phpt" role="test" />
+    <file name="017.phpt" role="test" />
+    <file name="018.phpt" role="test" />
+    <file name="019.phpt" role="test" />
+    <file name="020.phpt" role="test" />
+    <file name="021.phpt" role="test" />
+    <file name="022.phpt" role="test" />
+    <file name="023.phpt" role="test" />
+    <file name="024.phpt" role="test" />
+    <file name="025.phpt" role="test" />
+    <file name="026.phpt" role="test" />
+    <file name="027.phpt" role="test" />
+    <file name="028.phpt" role="test" />
+    <file name="029.phpt" role="test" />
+   </dir> <!-- //tests -->
+   <file name="api.c" role="src" />
+   <file name="api.h" role="src" />
+   <file name="ChangeLog" role="doc" />
+   <file name="config.m4" role="src" />
+   <file name="config.w32" role="src" />
+   <file name="COPYING" role="doc" />
+   <file name="CREDITS" role="doc" />
+   <file name="danish.c" role="src" />
+   <file name="danish.h" role="src" />
+   <file name="dutch.c" role="src" />
+   <file name="dutch.h" role="src" />
+   <file name="english.c" role="src" />
+   <file name="english.h" role="src" />
+   <file name="finnish.c" role="src" />
+   <file name="finnish.h" role="src" />
+   <file name="french.c" role="src" />
+   <file name="french.h" role="src" />
+   <file name="german.c" role="src" />
+   <file name="german.h" role="src" />
+   <file name="header.h" role="src" />
+   <file name="hungarian.c" role="src" />
+   <file name="hungarian.h" role="src" />
+   <file name="italian.c" role="src" />
+   <file name="italian.h" role="src" />
+   <file name="norwegian.c" role="src" />
+   <file name="norwegian.h" role="src" />
+   <file name="php_stem.h" role="src" />
+   <file name="porter.c" role="src" />
+   <file name="porter.h" role="src" />
+   <file name="portuguese.c" role="src" />
+   <file name="portuguese.h" role="src" />
+   <file name="README" role="doc" />
+   <file name="README.tests" role="doc" />
+   <file name="romanian.c" role="src" />
+   <file name="romanian.h" role="src" />
+   <file name="russian.c" role="src" />
+   <file name="russian.h" role="src" />
+   <file name="spanish.c" role="src" />
+   <file name="spanish.h" role="src" />
+   <file name="stem.c" role="src" />
+   <file name="stem.dsp" role="src" />
+   <file name="swedish.c" role="src" />
+   <file name="swedish.h" role="src" />
+   <file name="turkish.c" role="src" />
+   <file name="turkish.h" role="src" />
+   <file name="utilities.c" role="src" />
+   <file name="stemmers.def" role="src" />
+  </dir> <!-- / -->
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>4.3.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0b1</min>
+   </pearinstaller>
+  </required>
+ </dependencies>
+ <providesextension>stem</providesextension>
+ <extsrcrelease>
+  <configureoption default="yes" name="enable-stem-danish" prompt="Compile Danish stemmer?" />
+  <configureoption default="yes" name="enable-stem-dutch" prompt="Compile Dutch stemmer?" />
+  <configureoption default="yes" name="enable-stem-english" prompt="Compile English stemmer?" />
+  <configureoption default="yes" name="enable-stem-finnish" prompt="Compile Finnish stemmer?" />
+  <configureoption default="yes" name="enable-stem-french" prompt="Compile French stemmer?" />
+  <configureoption default="yes" name="enable-stem-german" prompt="Compile German stemmer?" />
+  <configureoption default="yes" name="enable-stem-hungarian" prompt="Compile Hungarian stemmer?" />
+  <configureoption default="yes" name="enable-stem-italian" prompt="Compile Italian stemmer?" />
+  <configureoption default="yes" name="enable-stem-norwegian" prompt="Compile Norwegian stemmer?" />
+  <configureoption default="yes" name="enable-stem-portuguese" prompt="Compile Portuguese stemmer?" />
+  <configureoption default="yes" name="enable-stem-romanian" prompt="Compile Romanian stemmer?" />
+  <configureoption default="yes" name="enable-stem-russian" prompt="Compile Russian stemmer?" />
+  <configureoption default="yes" name="enable-stem-spanish" prompt="Compile Spanish stemmer?" />
+  <configureoption default="yes" name="enable-stem-swedish" prompt="Compile Swedish stemmer?" />
+  <configureoption default="yes" name="enable-stem-turkish" prompt="Compile Turkish stemmer?" />
+ </extsrcrelease>
+ <changelog>
+  <release>
+   <version>
+    <release>1.4.3</release>
+    <api>1.4.3</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2006-01-23</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD</license>
+   <notes>Initial PECL release
+   </notes>
+  </release>
+ </changelog>
+</package>

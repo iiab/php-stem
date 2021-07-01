@@ -1,0 +1,43 @@
+// $Id: config.w32 282976 2009-06-29 00:22:46Z ohill $
+// vim:ft=javascript
+
+ARG_WITH("stem", "stem support", "no");
+
+if (PHP_STEM != "no") {
+	EXTENSION("stem", 	"stem.c \
+				api.c \
+				utilities.c \
+				porter.c \
+				french.c \
+				spanish.c \
+				danish.c \
+				dutch.c \
+				english.c \
+				german.c \
+				hungarian.c \
+				italian.c \
+				norwegian.c \
+				portuguese.c \
+				romanian.c \
+				russian.c \
+				swedish.c \
+				turkish.c \
+				finnish.c");
+
+  AC_DEFINE("ENABLE_DANISH", 1, "Danish support");
+  AC_DEFINE("ENABLE_DUTCH", 1, "Dutch support");
+  AC_DEFINE("ENABLE_ENGLISH", 1, "English support");
+  AC_DEFINE("ENABLE_FRENCH", 1, "French support");
+  AC_DEFINE("ENABLE_FINNISH", 1, "Finnish support");
+  AC_DEFINE("ENABLE_GERMAN", 1, "German support");
+  AC_DEFINE("ENABLE_HUNGARIAN", 1, "Hungarian support");
+  AC_DEFINE("ENABLE_ITALIAN", 1, "Italian support");
+  AC_DEFINE("ENABLE_NORWEGIAN", 1, "Norwegian support");
+  AC_DEFINE("ENABLE_PORTUGUESE", 1, "Portuguese support");
+  AC_DEFINE("ENABLE_ROMANIAN", 1, "Romanian support");
+  AC_DEFINE("ENABLE_RUSSIAN", 1, "Russian support");
+  AC_DEFINE("ENABLE_SPANISH", 1, "Spanish support");
+  AC_DEFINE("ENABLE_SWEDISH", 1, "Swedish support");
+  AC_DEFINE("ENABLE_TURKISH", 1, "Turkish support");
+}
+

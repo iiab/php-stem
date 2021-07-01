@@ -1,0 +1,132 @@
+ChangeLog:
+
+Release 2.0.0 - x x x
+
+  * Only use UTF-8 internally. Old ISO encodings are not supported anymore
+  * Bring everything to PHP License 3.01, copyright holder is now PHP Group
+  * Use X-macros to simplify code
+  
+09 Jun 2008
+
+* Reimported the new API from Snowball and synchronize
+  all currently available stemmers.
+* Added Turkish (Unicode), Romanian and Hungarian stemmers
+* Using current param parsing in ZE (don't manipulate zvals directly)
+* Fix bug #12482
+* Release of 1.5.0
+
+23 Jan 2006
+
+* We've got another developer to welcome to Team
+  PHP Stemming Extension, so let's all welcome
+  Olivier Hill. You might remember Olivier as 
+  maintainer of the French translation of the
+  PEAR manual. Olivier got the stem extension ready
+  for inclusion into PECL and re-did the configuration
+  files for the PEAR package system.
+* Fixed up some of the aforementioned configuration
+  files PECL-style. You can now install with the pear
+  command a la "pear install stem-1.4.3.tar.gz".
+* Release of 1.4.3.
+
+06 Jan 2006
+
+* Re-did a few areas that were causing problems on
+  64-bit x86 boxes. Not sure what the problem was, but
+  it seemed to be an engine problem. Need to take a 
+  closer look at that.
+* Added a new Unicode stemmer for Russian Cyrillic text.
+  Use it as you would the other stemmers using the
+  new russian_unicode() function or the STEM_RUSSIAN_UNICODE
+  constant.
+* Release of 1.4.2.
+
+04 Aug 2005
+
+* Fixed a tiny memory leak caused when stemming words
+  of <= 0 length. The leak was pretty minimal at 1 byte,
+  but it was still a leak nonetheless. Oops.
+* Release of 1.4.1.
+
+
+28 Mar 2002
+
+* Fixed a bug relating to the lower-casing of words.
+* Release of 1.4
+
+18 Dec 2002
+
+* Change all incoming words to lower-case before
+  stemming. Snowball likes that.
+
+27 Nov 2002
+
+* Release of 1.3.
+* Added some simple tests. The real tests involve
+  gigantic word lists, and to save space, they're
+  gzipped, so you need zlib enabled to do them.
+  The real tests have been removed from the standard
+  distribution, but are available from
+
+    http://www.tutorbuddy.com/software/
+
+26 Nov 2002
+
+* Fixed up a bunch of tests. Note that English and
+  Norwegian still don't work properly, as the output
+  files seem to be behind on the Snowball site.
+
+25 Nov 2002
+
+* Various stemming algorithms changed to match changes
+  found at Dr. Porter's site. TAKE NOTE: these may not be
+  100% backwardly compatible with older versions of
+  stem-php. You've been warned.
+
+
+22 Nov 2002
+
+* Finally did some more work. Added the ability to
+  enable/disable languages via stemconf.h.
+* New function: bool stem_enabled(int lang) -- returns
+  true if the language has been enabled, false if it
+  hasn't.
+* Added a Finnish language stemmer.
+
+06 May 2002
+
+* Small fixes to the phpinfo() table block.
+
+19 Apr 2002
+
+* Although I released 1.2 yesterday, Dr. Porter was so
+  quick to fix the minor bug (?) I found in Snowball
+  that I'm releasing a new version with the updated
+  stemmers already. This version is 1.2.1.
+
+18 Apr 2002
+
+* Released version 1.2.
+* Added fixes to the Snowball generated sources to make
+  them compile on Windows with VC++.
+* Added VC++ 6 project files.
+
+15 Apr 2002
+
+* Removed some dumbass comments from stem.c.
+* Added an include for stdlib.h to api.c to qwell some
+  warnings.
+
+13 Mar 2002
+
+* Updated the sources for Snowball. See COPYING for the 
+  specific files. This should fix a small memory leak. 
+
+12 Feb 2002
+
+* Finished the extension, for the most part.
+* Yea.
+
+
+J Smith
+<dark_panda@hushmail.com>
