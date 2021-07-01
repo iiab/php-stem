@@ -1,0 +1,243 @@
+$Id: README 241154 2007-08-13 01:11:07Z ohill $
+
+stem-php -- a PHP extension that provides word stemming.
+Version 1.5.0-dev.
+
+23 Jan 2006
+
+J Smith <jay@php.net>
+Olivier Hill <ohill@php.net>
+
+NOTE: There have been changes to some of the stemming algorithms,
+so they are not 100% compatible with older versions of stem-php.
+Everything works the same, but words stemmed with older versions
+may not match with the current version. Be careful.
+
+0. What is it?
+
+	Basically, a word stemmer takes a word and strips it of its suffix.
+	(Or suffixes.) Words like "assassination", "assassinations",
+	"assassinate" and "assassinated" all have the same base -- "assassin".
+	A word stemmer breaks each of the aforementioned words down to their
+	common base.
+
+	The stem extension for PHP provides this capability for a variety of
+	languages using Dr. M.F. Porter's Snowball API, which can be found at
+
+	  http://snowball.tartarus.org
+
+
+1. What is it good for?
+
+	The idea behind stemming is to increase the efficiency of information
+	retrieval by combining similar words. This has a couple of advantages
+	in, say, a typical search engine:
+
+	* You can reduce the size of your database/keyword list. There's no
+	  reason to store "physics", "physicist" and "physical" when you
+	  can just store "physic" and provide more or less the same results.
+	  This can decrease the search time as well as decrease the physical
+	  size of the database.
+
+	* Provide more generalized results. If a user searches on "assassins",
+	  it's easy to provide them results with words like "assassinated",
+	  "assassinations" and "assassin", since they all work out to the same
+	  thing after stemming.
+
+	There are lots of uses for stemming in the IR world. You can read up
+	on them at Dr. Porter's Snowball site.
+
+
+2. Why?
+
+	When I was first hired for my current job, I had to quickly pound
+	together a dynamic web site/application combined with a search engine.
+	I had about a month to do it. So I hammered it all together in PHP.
+
+	The search engine was pretty terrible at first, but eventually I
+	prettied it up, adding a lot of features like Boolean syntax, the ability
+	to run as a "daemon"-type service, and the ability to serve XML documents
+	for results, thus freeing it from it's web interface and making it
+	implementation independent.
+
+	Another feature I added after reading Dr. Porter's "An algorithm for
+	suffix stemming" article, first featured in "Program". (Although I read
+	it in "Readings in Information Retrieval", a collection of IR works by
+	K.S. Jones and P. Willett.)
+
+	My own implementation of Porter's stemmer went through several variations,
+	none of which were 100% correct, which wasn't a total surprise. (Porter's
+	site recants many malformed implementations.)
+
+	I finally hit it dead on after re-writing my crappy little stemmer in C
+	as a PHP module using standard POSIX regexes. After pumping some 50,000
+	words through the module and comparing it with Porter's own stemmer
+	(also written in C), I came up with identical results. (His was a bit
+	faster, though, which is to be expected considering the extra layers
+	of abstration PHP and Zend required.)
+
+	Eventually I realized we'd probably need a French stemmer, seeing as
+	I work for a Canadian company. So back to the drawing board I went.
+
+	By this time, Dr. Porter's Snowball project was well underway. After
+	discovering it, I decided to pack a bunch of languages into one PHP
+	extension -- stem.
+
+
+3. How do you use it?
+
+	There are two basic prototypes for the stem extension:
+
+		string stem(string word [, int language])
+		string stem_LANGUAGE(string word)
+
+	Both prototypes have the same return values: the stemmed word on success,
+	and false should some kind of Snowball error occur. (An E_NOTICE is
+	also raised on various errors.)
+
+	In the first prototype, language can be one of the following:
+
+	STEM_DANISH
+	STEM_DUTCH
+	STEM_ENGLISH -- enhanced Porter stemming algorithm
+	STEM_FINNISH
+	STEM_FRENCH
+	STEM_GERMAN
+	STEM_HUNGARIAN
+	STEM_ITALIAN
+	STEM_NORWEGIAN
+	STEM_PORTER -- the original Porter stemming algorithm
+	STEM_PORTUGUESE
+	STEM_ROMANIAN
+	STEM_RUSSIAN
+	STEM_RUSSIAN_UNICODE -- text is in Unicode encoding rather than UTF-8
+	STEM_SPANISH
+	STEM_SWEDISH
+	STEM_TURKISH_UNICODE
+
+	By default, STEM_PORTER is used.
+
+	In the second prototype variation, you can use the following forms:
+
+	stem_danish
+	stem_dutch
+	stem_english
+	stem_finnish
+	stem_french
+	stem_german
+	stem_hungarian
+	stem_italian
+	stem_norwegian
+	stem_porter
+	stem_portuguese
+	stem_romanian
+	stem_russian
+	stem_russian_unicode
+	stem_spanish
+	stem_swedish
+	stem_turkish_unicode
+
+	Each function will accept and return strings in standard Latin encodings
+	except for Russian, which uses Cyrillic KO18-R encoding and Romanian,
+	which uses ISO-8859-2.
+
+	The Unicode versions accept and return strings encoded in UTF-8.
+
+	More languages may follow, and perhaps some aliases (like stem_francais()
+	will be equivalent to stem_french(). Who knows.)
+
+	A quick example:
+
+	<?php
+
+	print "Original porter (default): assassinations -> " . stem("assassinations") . "\n";
+	print "English: devestating -> " . stem("devestating", STEM_ENGLISH) . "\n";
+	print "Finnish: innostuneissa -> " . stem("innostuneissa", STEM_FINNISH) . "\n";
+	print "French: majestueusement -> " . stem("majestueusement", STEM_FRENCH) . "\n";
+	print "Spanish: chicharrones -> " . stem("chicharrones", STEM_SPANISH) . "\n";
+	print "Dutch: lichamelijkheden -> " . stem("lichamelijkheden", STEM_DUTCH) . "\n";
+	print "Danish: undersøgelsen -> " . stem_danish("undersøgelsen") . "\n";
+	print "German: aufeinanderschlügen -> " . stem_german("aufeinanderschlügen") . "\n";
+	print "Italian: pronunciamento -> " . stem_italian("pronunciamento") . "\n";
+	print "Norwegian: havnemyndighetene -> " . stem_norwegian("havnemyndighetene") . "\n";
+	print "Portuguese: quilométricas -> " . stem_portuguese("quilométricas") . "\n";
+	print "Swedish: klostergården -> " . stem_swedish("klostergården") . "\n";
+
+	?>
+
+	Output:
+
+	Original porter (default): assassinations -> assassin
+	English: devestating -> devest
+	Finnish: innostuneissa -> innostun
+	French: majestueusement -> majestu
+	Spanish: chicharrones -> chicharron
+	Dutch: lichamelijkheden -> licham
+	Danish: undersøgelsen -> undersøg
+	German: aufeinanderschlügen -> aufeinanderschlüg
+	Italian: pronunciamento -> pronunc
+	Norwegian: havnemyndighetene -> havnemyndighet
+	Portuguese: quilométricas -> quilométr
+	Swedish: klostergården -> klostergård
+
+
+4. How do you compile it?
+
+	You compile it as you would any other PHP extension.
+
+	On UNIX-like systems:
+
+	0. Unpack the source.
+	1. Run phpize.
+	2. You can optionally enable/disable languages using
+	   --enable-LANGUAGE=(yes|no) style arugments.
+	3. Run "make" and "make install".
+
+	Alternatively, you can install using the pecl command thusly
+	as root:
+
+	# pecl install stem-x.x.x.tar.gz
+
+	Or using the PECL channel, which will pull the latest version:
+
+	# pecl install stem
+
+	On Windows systems it's a bit trickier, so you might want to
+	just download the extension from http://pecl4win.php.net/.
+	If you must build it, you've going to have to do some work to
+	get things running.
+
+	For PHP 4.x:
+
+	0. Unpack the source. It's probably best to unpack it under
+	   c:\path\to\php-src\ext, as the paths for the headers and
+	   libraries are set up to look for them in that general area.
+	1. Open up the VC++ 6 workspace provided. You will likely have
+	   to adjust the project settings to point to the proper 
+	   directories for the PHP includes and library files. Look
+	   under Project->Settings for those paths.
+	2. Build the DLL and move it to the proper extension directory
+	   for your system.
+	3. To use the extension, either use the dl() function to load
+	   the DLL or use the extension=php_stem.dll directive in your
+	   php.ini file.
+
+	For PHP 5.x and above:
+
+	0. Unpack the source into c:\path\to\php-src\ext. 
+	1. Open up a console window and head to the directory you just
+	   unpacked to.
+	2. Run the buildconf.bat script. This will build configure.js
+	   with the new build information for the stem extension.
+	3. Build your PHP tree as you normally would and add --with-stem
+	   to build the stem module.
+	4. To use the extension, either use the dl() function to load
+	   the DLL or use the extension=php_stem.dll directive in your
+	   php.ini file.
+				  
+
+	You might be able to just do all of this using the pecl/pear 
+	command on Windows. Honestly, I have no idea, I'm just glad 
+	I'm able to compile this thing under Windows to begin with.
+
+
