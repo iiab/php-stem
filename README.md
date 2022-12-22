@@ -24,6 +24,11 @@ See the README in the src directory
 
 The stem.ini file goes in /etc/php/N.M/mods-available/ where N and M are the major and minor versions of php
 
+Example stem.ini file:
+```
+extension=stem.so
+```
+
 The stem.so file goes in /usr/lib/php/yyyymmdd/ where yyyymmdd is the date computed by phpize
 
 ### Source
