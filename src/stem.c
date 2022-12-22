@@ -29,7 +29,7 @@
 #include "php_ini.h"
 #include "ext/standard/info.h"
 #include "php_stem.h"
-#if PHP_MAJOR_VERSION == 7
+#if PHP_MAJOR_VERSION >= 7
 ZEND_BEGIN_ARG_INFO_EX(arginfo_stem_params, 0, 0, 1)
 	ZEND_ARG_INFO(0, string)
 	ZEND_ARG_INFO(0, lang)
@@ -158,7 +158,7 @@ void php_stem(INTERNAL_FUNCTION_PARAMETERS, long lang)
 	void (*close_env)(struct SN_env*);
 	int (*stem)(struct SN_env*);
 
-#if PHP_MAJOR_VERSION == 7
+#if PHP_MAJOR_VERSION >= 7
 	const char* incoming;
 	size_t arglen;
 #else
@@ -172,7 +172,7 @@ void php_stem(INTERNAL_FUNCTION_PARAMETERS, long lang)
 
 	/* Empty string */
 	if (arglen <= 0) {
-#if PHP_MAJOR_VERSION == 7
+#if PHP_MAJOR_VERSION >= 7
 		RETURN_STRINGL(incoming, arglen);
 #else
 		RETURN_STRINGL(incoming, arglen, 1);
@@ -191,7 +191,7 @@ void php_stem(INTERNAL_FUNCTION_PARAMETERS, long lang)
 #undef STEMMER
 			
 		default:
-			php_error(E_NOTICE, "%s() couldn't stem word, stemming module not found", get_active_function_name(TSRMLS_C));
+			php_error(E_NOTICE, "%s() couldn't stem word, stemming module not found", get_active_function_name());
 			RETURN_FALSE;
 	}
 
@@ -201,7 +201,7 @@ void php_stem(INTERNAL_FUNCTION_PARAMETERS, long lang)
 	stem(z);
 	z->p[z->l]= '\0';
 
-#if PHP_MAJOR_VERSION == 7
+#if PHP_MAJOR_VERSION >= 7
 	RETVAL_STRINGL(z->p,z->l);
 #else
 	RETVAL_STRINGL(z->p,z->l, 1);
@@ -245,7 +245,7 @@ PHP_FUNCTION(stem_enabled)
 {
 	int lang;
 
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "l", &lang) == FAILURE) {
+	if (zend_parse_parameters(ZEND_NUM_ARGS() , "l", &lang) == FAILURE) {
 		RETURN_FALSE;
 	}
 
