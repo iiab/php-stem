@@ -16,20 +16,24 @@ The stem.so file depends on arch and php version.
 * `phpize`
 * `./configure`
 * `make`
-* `make test`
+* `make test` (might fail ...?)
 
-See the README in the src directory
 
-### Deployment
+### Installing/Enabling the Module
+Note: These steps tested on Ubuntu 22.04 with PHP 8.1 and php-fpm.  Paths on other distros may vary.
 
-The stem.ini file goes in /etc/php/N.M/mods-available/ where N and M are the major and minor versions of php
+* ... while still in `src` directory:
+* Install module
+  * `sudo make install`
+  * This will copy the .so file into `/usr/lib/php/yyyymmdd/' where yyyymmdd is the date computed by phpize
+* Create .ini
+  * `sudo cp stem.ini /etc/php/8.1/mods-available/`
+* Enable module for php-fpm
+  * `sudo phpenmod stem`
+* Reload php-fpm
+  * `sudo service php8.1-fpm reload`
 
-Example stem.ini file:
-```
-extension=stem.so
-```
 
-The stem.so file goes in /usr/lib/php/yyyymmdd/ where yyyymmdd is the date computed by phpize
 
 ### Source
 
