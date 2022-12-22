@@ -11,12 +11,12 @@ php-stem requires three files:
 
 The stem.so file depends on arch and php version.
 
-* Apt install php-dev
-* cd to src
-* phpize
-* ./configure
-* make
-* make test
+* `apt install php-dev`
+* `cd to src`
+* `phpize`
+* `./configure`
+* `make`
+* `make test`
 
 See the README in the src directory
 
